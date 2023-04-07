@@ -2,7 +2,7 @@
 
 Docker、K8S 練習用 Server
 
-## 指令
+## Docker 指令
 
 - `docker build . -t <your username>/node-server`: 建置 Image 
 - `docker images`: 查看 Image 清單
@@ -18,3 +18,12 @@ Docker、K8S 練習用 Server
 - `docker login -u=<username>`: 登入你的 Docker Hub
 - `dk push <your username>/node-server:latest`: 分享你的 Image 至 Docker Hub
 
+
+## K8S 指令
+
+使用 `kubectl` (這個只是與 K8S 核心溝通的工具) 前，先使用 Docker Desktop 將 K8S 服務運行起來。
+
+- `kubectl get pods`: 取得 Pod 清單
+- `kubectl apply -f pod1.yaml`: 運行 Pod 設定檔
+- `kubectl port-forward pod/node-server 3030:8080`: 映射 Pod 埠號
+- `kubectl delete pod/<your pod name>`: 刪除 Pod
