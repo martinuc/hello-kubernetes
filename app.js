@@ -14,7 +14,7 @@ app.use('/health', (req, res, next) => {
 app.use('/long-task', (req, res, next) => {
     setTimeout(() => {
         res.status(200).send({ code: '200 OK' });
-    }, 1000);
+    }, 100);
 });
 
 // error
