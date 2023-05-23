@@ -1,5 +1,5 @@
 {
-    "name": "web-auth-server",
+    "name": "hello-kubernetes",
     "version": "1.0.0",
     "description": "",
     "private": true,
@@ -10,7 +10,19 @@
         "log": "pm2 log --out --lines 150 web-auth-server",
         "test": "jest --detectOpenHandles --forceExit --runInBand --coverage",
         "press:health": "ab -n 1000 127.0.0.1:8080/health",
-        "press:long": "ab -n 1000 127.0.0.1:8080/long"
+        "press:long": "ab -n 1000 127.0.0.1:8080/long",
+        "docker:login": "docker login",
+        "docker:prune": "docker system prune",
+        "image:build": "docker build . -t pyshif/hello-kubernetes",
+        "image:get": "docker images",
+        "image:clear": "docker rmi pyshif/hello-kubernetes",
+        "container:push": "docker push pyshif/hello-kubernetes",
+        "container:run": "docker run -p 8080:8080 --name hello-kubernetes -d pyshif/hello-kubernetes",
+        "container:get": "docker ps",
+        "container:stop": "docker stop hello-kubernetes",
+        "cluster:start": "minikube start",
+        "cluster:dashboard": "minikube dashboard",
+        "deployment:create": "kubectl create deployment hello-node "
     },
     "author": "",
     "license": "ISC",
