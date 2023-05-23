@@ -11,9 +11,9 @@ app.use('/health', (req, res, next) => {
     res.status(200).json({ status: 200, message: 'health' });
 });
 
-app.use('/long-task', (req, res, next) => {
+app.use('/long', (req, res, next) => {
     setTimeout(() => {
-        res.status(200).send({ status: 200, message: 'long-task' });
+        res.status(200).send({ status: 200, message: 'long' });
     }, 1);
 });
 
