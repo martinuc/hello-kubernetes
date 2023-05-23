@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+  labels:
+    app: service-label
+spec:
+  # type: LoadBalancer # NodePort | LoadBalancer
+  type: NodePort
+  ports:
+    - name: local
+      protocol: TCP # TCP | SCTP | UDP
+      port: 8080 # Expose Port
+      targetPort: 8080 # Pod Port
+  selector:
+    app: pod-label

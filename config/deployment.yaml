@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-deployment
+  labels:
+    app: deployment-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-label
+  template:
+    metadata:
+      labels:
+        app: pod-label
+    spec:
+      containers:
+      - name: hello-pod
+        image: pyshif/hello-kubernetes
+        ports:
+          - containerPort: 8080
