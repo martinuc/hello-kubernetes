@@ -3,21 +3,21 @@ const createError = require('http-errors');
 const express = require('express');
 const app = express();
 
-// static
+// 靜態資源
 app.use(express.static(path.join(__dirname, 'public')));
 
-// services
+// API
 app.use('/health', (req, res, next) => {
-    res.status(200).json({ code: '200 OK' });
+    res.status(200).json({ status: 200, message: 'health' });
 });
 
 app.use('/long-task', (req, res, next) => {
     setTimeout(() => {
-        res.status(200).send({ code: '200 OK' });
-    }, 100);
+        res.status(200).send({ status: 200, message: 'long-task' });
+    }, 1);
 });
 
-// error
+// 錯誤處理
 app.use(function (req, res, next) {
     next(createError(404));
 });
