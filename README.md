@@ -27,3 +27,4 @@ Docker、K8S 練習用 Server
 - `kubectl apply -f pod1.yaml`: 運行 Pod 設定檔
 - `kubectl port-forward pod/node-server 3030:8080`: 映射 Pod 埠號
 - `kubectl delete pod/<your pod name>`: 刪除 Pod
+

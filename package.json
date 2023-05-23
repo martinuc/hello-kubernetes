@@ -11,7 +11,10 @@
         "container": "hello-kubernetes",
         "deployment": "hello-deployment",
         "service": "hello-service",
-        "pod": "hello-pod"
+        "pod": "hello-pod",
+        "scale_max": "10",
+        "scale_min": "2",
+        "export": "./temp"
     },
     "scripts": {
         "//": "🌟 Node.js Server Operation (PM2)",
@@ -58,11 +61,15 @@
         "deployment:describe": "kubectl describe deployments",
         "deployment:expose": "kubectl expose deployment $npm_package_config_deployment --type=LoadBalancer --port=$npm_package_config_port",
         "deployment:unexpose": "kubectl delete service $npm_package_config_deployment",
+        "deployment:scale-up": "kubectl scale deployments/$npm_package_config_deployment --replicas=$npm_package_config_scale_max",
+        "deployment:scale-down": "kubectl scale deployments/$npm_package_config_deployment --replicas=$npm_package_config_scale_min",
+        "deployment:export": "kubectl get deployments/$npm_package_config_deployment -o yaml > $npm_package_config_export/$npm_package_config_deployment.yaml",
         "//": "🔷 Kubernetes Service (Minikube)",
         "service:create": "kubectl apply -f ./config/service.yaml",
         "service:expose": "minikube service $npm_package_config_service --url",
         "service:delete": "kubectl delete service $npm_package_config_service",
         "service:get": "kubectl get services",
+        "service:describe": "kubectl describe services/$npm_package_config_deployment",
         "//": "🌧️ Kubernetes Pod (Minikube)",
         "pod:get": "kubectl get pods"
     },
