@@ -5,7 +5,7 @@ metadata:
   labels:
     app: service-label
 spec:
-  # type: LoadBalancer # NodePort | LoadBalancer
+  # type: LoadBalancer
   type: NodePort
   ports:
     - name: local
