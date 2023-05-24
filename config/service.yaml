@@ -5,8 +5,8 @@ metadata:
   labels:
     app: service-label
 spec:
-  # type: LoadBalancer
-  type: NodePort
+  # type: NodePort
+  type: LoadBalancer
   ports:
     - name: local
       protocol: TCP # TCP | SCTP | UDP
