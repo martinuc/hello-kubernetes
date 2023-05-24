@@ -15,7 +15,11 @@ spec:
         app: pod-label
     spec:
       containers:
-      - name: hello-pod
+      - name: hello-deployment
         image: pyshif/hello-kubernetes
         ports:
           - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500Mi
