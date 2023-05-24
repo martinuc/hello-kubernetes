@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hello-deployment
+  name: hello-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: hello-deployment
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 10
   metrics:
   - type: Resource
@@ -16,15 +16,31 @@ spec:
       target:
         type: Utilization
         averageUtilization: 50
-status:
-  observedGeneration: 1
-  lastScaleTime: <some-time>
-  currentReplicas: 1
-  desiredReplicas: 1
-  currentMetrics:
-  - type: Resource
-    resource:
-      name: cpu
-      current:
-        averageUtilization: 0
-        averageValue: 0
+  external:
+    metric:
+      name: queue_messages_ready
+      selector:
+        matchLabels:
+          queue: "worker_tasks"
+    target:
+      type: AverageValue
+      averageValue: 30
+    behavior:
+      scaleDown:
+        stabilizationWindowSeconds: 300 # 消除擴縮指標的波動性，避免頻繁、不必要的更動規模（取時間間隔內最大值）
+        policies:
+        - type: Percent
+          value: 100 # 允許 100% 刪除當前運行的 replicas
+          periodSeconds: 15 # 能夠採取行動的時間間隔
+      scaleUp:
+        # 對擴容不限制穩定窗口，也就是 metrics 指標達到，就直接 scale up
+        stabilizationWindowSeconds: 0
+        # 當多個 policy 存在時，預設會選擇能夠更大程度改變的策略，可透過更改 selectPolicy 選擇策略
+        policies:
+        - type: Percent
+          value: 100 # 允許 100% 增加當前運行的 replicas
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 15
+        selectPolicy: Max # Min 優先取小 | Max 優先取大 | Disabled 禁用該 Policy
